@@ -55,11 +55,11 @@ git commit -m "7 additional files from running express-generator"
 npm i bcryptjs colors cookie-parser cors debug dotenv ejs express express-fileupload express-mongo-sanitize express-rate-limit helmet hpp http-errors jsonwebtoken mongoose morgan node-geocoder nodemailer slugify xss-clean
 ```
 
-<!-- ## 4. Install the **MERN** _**`dependencies`**_
+## 4. Install the **MERN** _**`dependencies`**_
 
 ```bash
 npm i bcryptjs client config express express-validator gravatar jsonwebtoken mongoose normalize-url request
-``` -->
+```
 
 <!-- ```bash
 # API Express Mastery
