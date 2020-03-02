@@ -3,14 +3,55 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "NODE_ENV=production node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
-  }
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "debug": "^2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.2",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.1.6",
+    "express-mongo-sanitize": "^1.3.2",
+    "express-rate-limit": "^5.1.1",
+    "helmet": "^3.21.3",
+    "hpp": "^0.2.3",
+    "http-errors": "^1.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.2",
+    "morgan": "^1.9.1",
+    "node-geocoder": "^3.25.0",
+    "nodemailer": "^6.4.4",
+    "slugify": "^1.4.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2"
+  },
+  "description": "[![mongodb](public/images/MongoDB.png)](https://www.mongodb.com) [![mailtrap](public/images/mailtrap.png)](https://mailtrap.io) [![mapquest](public/images/mapquest.png)](https://developer.mapquest.com) [![mongo compass](public/images/MongoDB.png)](https://www.mongodb.com/products/compass)",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TurtleWolf/socialDEVcourseBT.git"
+  },
+  "keywords": [
+    "MERN",
+    "Mongo",
+    "Express-Generator",
+    "React",
+    "Node",
+    "Social-Network"
+  ],
+  "author": "TurtleWolfe.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TurtleWolf/socialDEVcourseBT/issues"
+  },
+  "homepage": "https://github.com/TurtleWolf/socialDEVcourseBT#readme"
 }
