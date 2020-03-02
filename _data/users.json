@@ -1,0 +1,107 @@
+[
+	{
+		"_id": "5d7a514b5d2c12c7449be042",
+		"name": "Admin Account",
+		"email": "admin@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5d7a514b5d2c12c7449be043",
+		"name": "Publisher Account",
+		"email": "publisher@gmail.com",
+		"role": "publisher",
+		"password": "123456"
+	},
+	{
+		"_id": "5d7a514b5d2c12c7449be044",
+		"name": "User Account",
+		"email": "user@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5d7a514b5d2c12c7449be045",
+		"name": "John Doe",
+		"email": "john@gmail.com",
+		"role": "publisher",
+		"password": "123456"
+	},
+	{
+		"_id": "5d7a514b5d2c12c7449be046",
+		"name": "mathew",
+		"email": "mathew@gmail.com",
+		"role": "publisher",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc031",
+		"name": "mark",
+		"email": "mark@gmail.com",
+		"role": "publisher",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc032",
+		"name": "luke",
+		"email": "luke@gmail.com",
+		"role": "publisher",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc033",
+		"name": "john",
+		"email": "john@mail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc034",
+		"name": "peter",
+		"email": "peter@a.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc035",
+		"name": "paul",
+		"email": "paul@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc036",
+		"name": "marry",
+		"email": "marry@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc037",
+		"name": "maggie",
+		"email": "maggie@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc038",
+		"name": "martha",
+		"email": "martha@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc039",
+		"name": "barthallemew",
+		"email": "barthallemew@gmail.com",
+		"role": "user",
+		"password": "123456"
+	},
+	{
+		"_id": "5c8a1d5b0190b214360dc040",
+		"name": "sara",
+		"email": "sara@gmail.com",
+		"role": "user",
+		"password": "123456"
+	}
+]
