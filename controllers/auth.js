@@ -1,9 +1,10 @@
 const crypto = require('crypto');
+const gravatar = require('gravatar');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
-const gravatar = require('gravatar');
+
 // @desc      Register user
 // @route     POST /api/v1/auth/register
 // @access    Public

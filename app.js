@@ -36,8 +36,9 @@ console.log(`Server listening in ${process.env.NODE_ENV} on port ${process.env.P
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Init MiddleWare
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
