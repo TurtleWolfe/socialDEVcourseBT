@@ -21,9 +21,11 @@ connectDB();
 
 //Router Files
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const userzRouter = require('./routes/userz');
-const authRouter = require('./routes/auth');
+const profilesRouter = require('./routes/profiles');
+const postsRouter = require('./routes/posts');
 const widgetsRouter = require('./routes/widgets');
 const widgetzRouter = require('./routes/widgetz');
 
@@ -64,11 +66,13 @@ app.use(cors());
 
 // App Mount Routers
 app.use('/', indexRouter);
+app.use('/api/v1/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1/users', userzRouter);
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/widgets', widgetzRouter);
+app.use('/api/v1/profiles', profilesRouter);
+app.use('/api/v1/posts', postsRouter);
 app.use('/widgets', widgetsRouter);
+app.use('/api/v1/widgets', widgetzRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

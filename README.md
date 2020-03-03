@@ -58,7 +58,7 @@ npm i bcryptjs colors cookie-parser cors debug dotenv ejs express express-fileup
 ## 4. Install the **MERN** _**`dependencies`**_
 
 ```bash
-npm i bcryptjs client config express express-validator gravatar jsonwebtoken mongoose normalize-url request
+npm i bcryptjs client express express-validator gravatar jsonwebtoken mongoose normalize-url request
 ```
 
 <!-- ```bash
