@@ -11,6 +11,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const xssCln = require('xss-clean');
+const cookieSession = require('cookie-session');
 
 //Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -30,6 +31,15 @@ const widgetsRouter = require('./routes/widgets');
 const widgetzRouter = require('./routes/widgetz');
 
 const app = express();
+//after you declare app put this code:
+//session init
+app.use(cookieSession({
+  name: 'session',
+  keys: [`"ourLawdAndSaviehBrad"`],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 console.log(`Server listening in ${process.env.NODE_ENV} on port ${process.env.PORT}!`.yellow.bold);
 
 // view engine setup

@@ -10,6 +10,10 @@ const User = require('../models/User');
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
+    //check login attempts
+    if (req.session.login_attempts > 3) {
+        return res.status(400).json({ msg: 'you try to brute force me?' });
+    }
     const errors = validationResult(req);
     // Validation Errors carried in from //routes/auth.js
     if (!errors.isEmpty()) {
@@ -42,7 +46,8 @@ exports.register = asyncHandler(async (req, res, next) => {
             r: `pg`,    //rating
             d: `mm`     //default image
         });
-
+        //incrament login attempts
+        req.session.login_attempts = (req.session.login_attempts || 0) + 1;
         // Create user
         user = await User.create({
             name,
@@ -75,6 +80,10 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
+    //check login attempts
+    if (req.session.login_attempts > 3) {
+        return res.status(400).json({ msg: 'you try to brute force me?' });
+    }
     const { email, password } = req.body;
     try {
         // Validate email & password
@@ -95,7 +104,8 @@ exports.login = asyncHandler(async (req, res, next) => {
         if (!isMatch) {
             return next(new ErrorResponse('Invalid credentials', 401));
         }
-
+        //incrament login attempts
+        req.session.login_attempts = (req.session.login_attempts || 0) + 1;
         sendTokenResponse(user, 200, res);
     } catch (error) {
         console.error(err.message);
