@@ -21,18 +21,18 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     // Make sure token exists
     if (!token) {
-        return next(new ErrorResponse('Not authorized to access this route', 401));
+        return next(new ErrorResponse('Security Token is invalid, //MiddleWare/Auth.JS', 401));
     }
 
     try {
-        // Verify token
+        // Verify token by matching it to the user's :id
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log(decoded);
         req.user = await User.findById(decoded.id);
 
         next();
     } catch (err) {
-        return next(new ErrorResponse('Not authorized to access this route', 401));
+        return next(new ErrorResponse('Security Token is invalid, //MiddleWare/Auth.JS', 401));
     }
 });
 

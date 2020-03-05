@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const gravatar = require('gravatar');
+const { validationResult } = require('express-validator');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
@@ -9,54 +10,97 @@ const User = require('../models/User');
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    // Validation Errors carried in from //routes/auth.js
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).json({
+            success: false,
+            errors: errors.array()
+        });
+    }
+
     const { name, email, password, role } = req.body;
+    try {
+        // See if User already exists
+        let user = await User.findOne({ email });
+        if (user) {
+            return res
+                .status(422)
+                .json({
+                    success: false,
+                    data: { email },
+                    errors: [{
+                        msg: 'User may already exists'
+                    }]
+                });
+        }
 
-    // See if User already exists
+        // Get User's Gravatar
+        const avatar = gravatar.url(email, {
+            s: `200`,   //size
+            r: `pg`,    //rating
+            d: `mm`     //default image
+        });
 
-    // Get User's Gravatar
-    const avatar = gravatar.url(email, {
-        s: `200`,
-        r: `pg`,
-        d: `mm`
-    });
-    // Create user
-    const user = await User.create({
-        name,
-        email,
-        avatar,
-        password,
-        role,
-    });
+        // Create user
+        user = await User.create({
+            name,
+            email,
+            avatar,
+            password,
+            role,
+        });
 
-    sendTokenResponse(user, 201, res);
+        // while Validation is redundant in the Controller and the Model,
+        // I felt like double encrypting was over kill..
+        // so I left it in models/User.js under UserSchema.pre
+
+        //plus it would have already been saved
+        //in the previous step of user = await User.create({..
+
+        // const salt = await bcrypt.genSalt(10);
+        // this.password = await bcrypt.hash(this.password, salt);
+
+        // Return JsonWebToken
+        sendTokenResponse(user, 201, res);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error; Controllers/Auth.JS/Register');
+    }
 });
 
-// @desc      Login user
+// @desc      Login user & Get Token
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
+    try {
+        // Validate email & password
+        if (!email || !password) {
+            return next(new ErrorResponse('Please provide an email and password', 400));
+        }
 
-    // Validate email & password
-    if (!email || !password) {
-        return next(new ErrorResponse('Please provide an email and password', 400));
+        // Check for user
+        const user = await User.findOne({ email }).select('+password');
+
+        if (!user) {
+            return next(new ErrorResponse('Invalid credentials', 401));
+        }
+
+        // Check if password matches
+        const isMatch = await user.matchPassword(password);
+
+        if (!isMatch) {
+            return next(new ErrorResponse('Invalid credentials', 401));
+        }
+
+        sendTokenResponse(user, 200, res);
+    } catch (error) {
+        console.error(err.message);
+        res.status(500).send('Server Error; Controllers/Auth.JS/Login');
     }
-
-    // Check for user
-    const user = await User.findOne({ email }).select('+password');
-
-    if (!user) {
-        return next(new ErrorResponse('Invalid credentials', 401));
-    }
-
-    // Check if password matches
-    const isMatch = await user.matchPassword(password);
-
-    if (!isMatch) {
-        return next(new ErrorResponse('Invalid credentials', 401));
-    }
-
-    sendTokenResponse(user, 200, res);
 });
 
 // @desc      Log user out / clear cookie
@@ -78,7 +122,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/auth/me
 // @access    Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select('-password');
 
     return res.status(200).json({
         success: true,
@@ -197,6 +241,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken();
 
+    //payload?
     const options = {
         expires: new Date(
             Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -215,4 +260,21 @@ const sendTokenResponse = (user, statusCode, res) => {
             success: true,
             token,
         });
-}; // Get token from model, create cookie and send response
+}; // double check token options on line 254?
+
+        // (err, token) => {
+        //     if (err) throw err;
+        //     //feels like over kill and a security risks..
+        //     // if the token has an error they shouldn't need it..
+        //      // had trouble making it work anyways.. Episode 12 of MERN stack
+        //     // res.json({ token });
+        //     res.status(201)
+        //         .json({
+        //             token,
+        //             success: false,
+        //             data: { token },
+        //             errors: [{
+        //                 msg: 'User may already exists'
+        //             }]
+        //         });
+        // }
