@@ -254,7 +254,6 @@ const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken();
 
-    //payload?
     const options = {
         expires: new Date(
             Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -273,21 +272,4 @@ const sendTokenResponse = (user, statusCode, res) => {
             success: true,
             token,
         });
-}; // double check token options on line 254?
-
-        // (err, token) => {
-        //     if (err) throw err;
-        //     //feels like over kill and a security risks..
-        //     // if the token has an error they shouldn't need it..
-        //      // had trouble making it work anyways.. Episode 12 of MERN stack
-        //     // res.json({ token });
-        //     res.status(201)
-        //         .json({
-        //             token,
-        //             success: false,
-        //             data: { token },
-        //             errors: [{
-        //                 msg: 'User may already exists'
-        //             }]
-        //         });
-        // }
+}; 

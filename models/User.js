@@ -49,11 +49,15 @@ UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Sign JWT and return
+// Sign JWT and return PAYLOAD?
 UserSchema.methods.getSignedJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE,
-    });
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRE },
+        (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+        }
+    );
 };
 
 // Match user entered password to hashed password in database
