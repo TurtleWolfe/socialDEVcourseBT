@@ -11,7 +11,7 @@ const User = require('../models/User');
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
     //check login attempts
-    if (req.session.login_attempts > 3) {
+    if (req.session.login_attempts > 4) {
         return res.status(400).json({ msg: 'you try to brute force me?' });
     }
     const errors = validationResult(req);
@@ -29,6 +29,8 @@ exports.register = asyncHandler(async (req, res, next) => {
         // See if User already exists
         let user = await User.findOne({ email });
         if (user) {
+            //incrament login attempts
+            req.session.login_attempts = (req.session.login_attempts || 0) + 1;
             return res
                 .status(422)
                 .json({
@@ -46,8 +48,6 @@ exports.register = asyncHandler(async (req, res, next) => {
             r: `pg`,    //rating
             d: `mm`     //default image
         });
-        //incrament login attempts
-        req.session.login_attempts = (req.session.login_attempts || 0) + 1;
         // Create user
         user = await User.create({
             name,
@@ -81,7 +81,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
     //check login attempts
-    if (req.session.login_attempts > 3) {
+    if (req.session.login_attempts > 10) {
         return res.status(400).json({ msg: 'you try to brute force me?' });
     }
     const { email, password } = req.body;
@@ -95,6 +95,8 @@ exports.login = asyncHandler(async (req, res, next) => {
         const user = await User.findOne({ email }).select('+password');
 
         if (!user) {
+            //incrament login attempts
+            req.session.login_attempts = (req.session.login_attempts || 0) + 1;
             return next(new ErrorResponse('Invalid credentials', 401));
         }
 
@@ -102,10 +104,11 @@ exports.login = asyncHandler(async (req, res, next) => {
         const isMatch = await user.matchPassword(password);
 
         if (!isMatch) {
+            //incrament login attempts
+            req.session.login_attempts = (req.session.login_attempts || 0) + 1;
             return next(new ErrorResponse('Invalid credentials', 401));
         }
-        //incrament login attempts
-        req.session.login_attempts = (req.session.login_attempts || 0) + 1;
+
         sendTokenResponse(user, 200, res);
     } catch (error) {
         console.error(err.message);

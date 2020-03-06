@@ -35,11 +35,13 @@ const app = express();
 //session init
 app.use(cookieSession({
   name: 'session',
-  keys: [`"ourLawdAndSaviehBrad"`],
+  keys: [`${process.env.COOKIE_SESSION_SALT}`],
 
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
+// console.log(`${process.env.COOKIE_SESSION_SALT}`.bgMagenta);
+
 console.log(`Server listening in ${process.env.NODE_ENV} on port ${process.env.PORT}!`.yellow.bold);
 
 // view engine setup
