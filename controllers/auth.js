@@ -11,7 +11,7 @@ const User = require('../models/User');
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
     //check login attempts
-    if (req.session.login_attempts > 4) {
+    if (req.session.login_attempts > 40) {
         return res.status(400).json({ msg: 'you try to brute force me?' });
     }
     const errors = validationResult(req);
@@ -85,11 +85,11 @@ exports.login = asyncHandler(async (req, res, next) => {
         return res.status(400).json({ msg: 'you try to brute force me?' });
     }
     const { email, password } = req.body;
+    // Validate email & password
+    if (!email || !password) {
+        return next(new ErrorResponse('Please provide an email and password', 400));
+    }
     try {
-        // Validate email & password
-        if (!email || !password) {
-            return next(new ErrorResponse('Please provide an email and password', 400));
-        }
 
         // Check for user
         const user = await User.findOne({ email }).select('+password');

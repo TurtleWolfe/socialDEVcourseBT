@@ -1,5 +1,35 @@
 # Starting a new [**_`CRUD`_**](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete 'wikipedia.org') project from scratch in [**_`NODE`_**](https://nodejs.org/ 'NodeJS.org') using [**_`Exprress Generator`_**](https://expressjs.com/en/starter/generator.html 'Exprress Generator')
 
+1. ~~**`advancedResults`** (posts)~~
+1. delete unused `packages`
+
+   - **`config`**
+   - **`request`**
+
+1. **`seeder.js`** & **`_data`** files
+
+   - **`_data/posts.json`**
+   - **`_data/profiles.json`**
+   - **`_data/widgets.json`**
+
+1. **`error`** & **`json`** `returns` standardize responses
+1. add **`geoCoder`** to **`Profile`** location
+1. **`/middleware/advancedResults`**
+   - `query = model.find(JSON.parse(queryStr)).populate('courses');`
+1. calculate **`count`**
+
+   - **`likes`**
+   - **`comments`**
+
+1. clean up **`comments`** in **`controllers`**
+1. clean up **`status codes`**
+1. clean up **`testing`**
+1. clean up **`routes`**
+1. **`updates`** (literaly)
+1. `calculation` of **`averages`** uneffected by **`updates`**
+1. peer review? **`stack exchange`**
+1. `// Sign JWT and return PAYLOAD? UserSchema.methods.getSignedJwtToken = function () { return jwt.sign({ id: this.\_id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE }, (err, token) => { if (err) throw err; res.json({ token }); } ); };`
+
 [![mongodb](public/images/MongoDB.png)](https://www.mongodb.com)
 [![mailtrap](public/images/mailtrap.png)](https://mailtrap.io)
 [![mapquest](public/images/mapquest.png)](https://developer.mapquest.com)

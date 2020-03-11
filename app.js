@@ -25,8 +25,8 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const userzRouter = require('./routes/userz');
-const profilesRouter = require('./routes/profiles');
-const postsRouter = require('./routes/posts');
+const profilesRouter = require('./routes/profilez');
+const postsRouter = require('./routes/postz');
 const widgetsRouter = require('./routes/widgets');
 const widgetzRouter = require('./routes/widgetz');
 

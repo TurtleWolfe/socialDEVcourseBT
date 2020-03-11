@@ -52,11 +52,7 @@ UserSchema.pre('save', async function (next) {
 // Sign JWT and return PAYLOAD?
 UserSchema.methods.getSignedJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRE },
-        (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-        }
+        { expiresIn: process.env.JWT_EXPIRE }
     );
 };
 
