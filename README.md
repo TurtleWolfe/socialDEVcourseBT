@@ -12,6 +12,8 @@
    - **`_data/profiles.json`**
    - **`_data/widgets.json`**
 
+1. confirm deletions in database per **`db.js`**
+
 1. **`error`** & **`json`** `returns` standardize responses
 1. add **`geoCoder`** to **`Profile`** location
 1. **`/middleware/advancedResults`**
